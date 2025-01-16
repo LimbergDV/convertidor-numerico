@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const inputField = document.querySelector('.input.is-link');
-    const binaryField = document.querySelector('input[placeholder="Texto en binario"]');
+    const binaryField = document.querySelector('input[placeholder="Texto en Binario"]');
     const selectField = document.querySelector('.select select');
 
     
@@ -33,8 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const inputField = document.querySelector('.input.is-link');
-    const hexaFied = document.querySelector('input[placeholder="Texto en hexadecimal"]');
+    const hexaField = document.querySelector('input[placeholder="Texto en Hexadecimal"]');
     const selectField = document.querySelector('.select select');
 
+    function decimalToHexadecimal(num){
+        let resultado = '';
+        while (num > 0){
+            const remainder = num % 16;
+            resultado = remainder.toString(16) + resultado;
+            num = Math.floor(num / 16);
+        }
+        return resultado || '0';
+    }
 
+    inputField.addEventListener('input', () => {
+        const text  = inputField.value.trim();
+        const inputType = selectField.value;
+
+        if (inputType === "Decimal"){
+            const decimal = parseInt(text, 10)
+            if(!isNaN(decimal)){
+                const binary = decimalToHexadecimal(decimal);
+                hexaField.value = binary;
+            } else {
+                hexaField.value = '';
+            }
+        } else {
+            hexaField.value = '';
+        }
+    });
 });
+
+
