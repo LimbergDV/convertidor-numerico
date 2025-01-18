@@ -32,9 +32,9 @@
     <div class="select is-primary">
         <select placeholder="hola">
           <option value="Binario">Binario</option>
-          <option>Hexadecimal</option>
+          <option value="Hexadecimal">Hexadecimal</option>
           <option value="Decimal" >Decimal</option>
-          <option value="">Octagonal</option>
+          <option value="Octal">Octagonal</option>
         </select>
       </div>
 
@@ -93,7 +93,7 @@
         <div class="field">
             <label class="label">Texto</label>
             <div class="control">
-              <input class="input is-link" type="text" placeholder="Escribe el texto... (Máx 20 caractéres)" maxlength="20">
+              <input class="input is-info" id="inputText" type="text" placeholder="Escribe el texto... (Máx 20 caractéres)" maxlength="20">
             </div>
         </div>
 
@@ -104,7 +104,7 @@
             </a>
           </p>
         <p class="control is-expanded">
-          <input class="input" type="text" placeholder="Texto en ASCII" disabled>
+          <input class="input" id="asciiResult" type="text" placeholder="Texto en ASCII" disabled>
         </p>
       </div>
 

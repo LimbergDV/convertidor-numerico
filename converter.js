@@ -1,205 +1,148 @@
-//funciones de decimal a x método 
 document.addEventListener('DOMContentLoaded', () => {
+    // Selección de elementos del DOM
     const inputField = document.querySelector('.input.is-link');
     const binaryField = document.querySelector('input[placeholder="Texto en Binario"]');
-    const selectField = document.querySelector('.select select');
-
-    
-    function decimalToBinary(num) {
-        let resultado = '';
-        while (num > 0) {
-            resultado = (num % 2) + resultado;
-            num = Math.floor(num / 2);
-        }
-        return resultado || '0';
-    }
-
-    inputField.addEventListener('input', () => {
-        const text = inputField.value.trim(); // Valor del campo de entrada
-        const inputType = selectField.value; // Tipo de entrada seleccionada
-
-        if (inputType === "Decimal") {
-            const decimal = parseInt(text, 10);
-            if (!isNaN(decimal)) {
-                const binary = decimalToBinary(decimal); // Convierte a binario
-                binaryField.value = binary; // Muestra el resultado
-            } else {
-                binaryField.value = ''; // Limpia si no es un número válido
-            }
-        } else {
-            binaryField.value = ''; // Limpia el campo si no es decimal
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.querySelector('.input.is-link');
     const hexaField = document.querySelector('input[placeholder="Texto en Hexadecimal"]');
-    const selectField = document.querySelector('.select select');
-
-    function decimalToHexadecimal(num){
-        let resultado = '';
-        while (num > 0){
-            const remainder = num % 16;
-            resultado = remainder.toString(16) + resultado;
-            num = Math.floor(num / 16);
-        }
-        return resultado || '0';
-    }
-
-    inputField.addEventListener('input', () => {
-        const text  = inputField.value.trim();
-        const inputType = selectField.value;
-
-        if (inputType === "Decimal"){
-            const decimal = parseInt(text, 10)
-            if(!isNaN(decimal)){
-                const binary = decimalToHexadecimal(decimal);
-                hexaField.value = binary;
-            } else {
-                hexaField.value = '';
-            }
-        } else {
-            hexaField.value = '';
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.querySelector('.input.is-link');
     const octaField = document.querySelector('input[placeholder="Texto en Octagonal"]');
+    const decimalField = document.querySelector('input[placeholder="Texto en Decimal"]');
     const selectField = document.querySelector('.select select');
 
-    function decimalToOctadecimal(num){
-        let resultado = '';
-        while (num > 0){
-            const remainder = num % 8;
-            resultado = remainder.toString(8) + resultado;
-            num = Math.floor(num / 8);
-        }
-        return resultado || '0';
+    // Funciones de conversión
+    function decimalToBinary(num) {
+        return num.toString(2) || '0';
     }
 
-    inputField.addEventListener('input', () => {
-        const text  = inputField.value.trim();
-        const inputType = selectField.value;
-
-        if (inputType === "Decimal"){
-            const decimal = parseInt(text, 10)
-            if(!isNaN(decimal)){
-                const binary = decimalToOctadecimal(decimal);
-                octaField.value = binary;
-            } else {
-                octaField.value = '';
-            }
-        } else {
-            octaField.value = '';
-        }
-    });
-});
-
-//funciones de binario a x método
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.querySelector('.input.is-link');
-    const resultField = document.querySelector('input[placeholder="Texto en Decimal"]');
-    const selectField = document.querySelector('.select select');
-
-    function binaryToDecimal(binaryStr){
-        let decimal = 0;
-        for(let i = 0; i < binaryStr.length; i++){
-            const bit = parseInt(binaryStr[i], 10);
-            if (bit !== 0 && bit !== 1) return NaN; // Verifica si no es binario
-            decimal = decimal * 2 + bit;
-        }
-        return decimal;
+    function decimalToHexadecimal(num) {
+        return num.toString(16).toUpperCase() || '0';
     }
 
-    inputField.addEventListener('input', () => {
-        const text  = inputField.value.trim();
-        const inputType = selectField.value;
+    function decimalToOctal(num) {
+        return num.toString(8) || '0';
+    }
 
-        if (inputType === "Binario"){
-            const decimal = binaryToDecimal(text);
-            if(!isNaN(decimal)){
-                resultField.value = decimal;
-            } else {
-                resultField.value = 'Entrada de valor no valida';
-            }
-        } else {
-            resultField.value = '';
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.querySelector('.input.is-link');
-    const resultField = document.querySelector('input[placeholder="Texto en Hexadecimal"]');
-    const selectField = document.querySelector('.select select');
+    function binaryToDecimal(binaryStr) {
+        if (!/^[01]+$/.test(binaryStr)) return NaN;
+        return parseInt(binaryStr, 2);
+    }
 
     function binaryToHexadecimal(binaryStr) {
         if (!/^[01]+$/.test(binaryStr)) return 'Entrada no válida';
-
-        while (binaryStr.length % 4 !== 0) {
-            binaryStr = '0' + binaryStr;
-        }
-
-        // Agrupa en bloques de 4 bits y convierte cada bloque a hexadecimal
-        let hexadecimal = '';
-        for (let i = 0; i < binaryStr.length; i += 4) {
-            const fourBits = binaryStr.slice(i, i + 4); // Toma un bloque de 4 bits
-            const decimalValue = parseInt(fourBits, 2); // Convierte el bloque a decimal
-            hexadecimal += decimalValue.toString(16).toUpperCase(); // Convierte a hexadecimal
-        }
-
-        return hexadecimal;
+        return parseInt(binaryStr, 2).toString(16).toUpperCase();
     }
 
-    inputField.addEventListener('input', () => {
-        const text = inputField.value.trim();
-        const inputType = selectField.value; 
+    function binaryToOctal(binaryStr) {
+        if (!/^[01]+$/.test(binaryStr)) return 'Entrada no válida';
+        return parseInt(binaryStr, 2).toString(8);
+    }
 
-        if (inputType === "Binario") {
-            const hexadecimal = binaryToHexadecimal(text);
-            resultField.value = hexadecimal !== 'Entrada no válida' ? hexadecimal : 'Entrada no válida';
+    function hexadecimalToDecimal(hexStr) {
+        if (!/^[0-9A-Fa-f]+$/.test(hexStr)) return NaN;
+        return parseInt(hexStr, 16);
+    }
+
+    function hexadecimalToBinary(hexStr) {
+        if (!/^[0-9A-Fa-f]+$/.test(hexStr)) return 'Entrada no válida';
+        return parseInt(hexStr, 16).toString(2);
+    }
+
+    function hexadecimalToOctal(hexStr) {
+        if (!/^[0-9A-Fa-f]+$/.test(hexStr)) return 'Entrada no válida';
+        return parseInt(hexStr, 16).toString(8);
+    }
+
+    function octalToDecimal(octalStr) {
+        if (!/^[0-7]+$/.test(octalStr)) return NaN;
+        return parseInt(octalStr, 8);
+    }
+
+    function octalToBinary(octalStr) {
+        if (!/^[0-7]+$/.test(octalStr)) return 'Entrada no válida';
+        return parseInt(octalStr, 8).toString(2);
+    }
+
+    function octalToHexadecimal(octalStr) {
+        if (!/^[0-7]+$/.test(octalStr)) return 'Entrada no válida';
+        return parseInt(octalStr, 8).toString(16).toUpperCase();
+    }
+
+    // Actualiza los campos de salida
+    function updateFields() {
+        const text = inputField.value.trim();
+        const inputType = selectField.value;
+
+        if (inputType === 'Decimal') {
+            const decimal = parseInt(text, 10);
+
+            if (!isNaN(decimal)) {
+                binaryField.value = decimalToBinary(decimal);
+                hexaField.value = decimalToHexadecimal(decimal);
+                octaField.value = decimalToOctal(decimal);
+                decimalField.value = decimal;
+            } else {
+                clearFields();
+            }
+        } else if (inputType === 'Binario') {
+            const decimal = binaryToDecimal(text);
+
+            if (!isNaN(decimal)) {
+                binaryField.value = text;
+                hexaField.value = binaryToHexadecimal(text);
+                octaField.value = binaryToOctal(text);
+                decimalField.value = decimal;
+            } else {
+                clearFields('Entrada no válida');
+            }
+        } else if (inputType === 'Hexadecimal') {
+            const decimal = hexadecimalToDecimal(text);
+
+            if (!isNaN(decimal)) {
+                binaryField.value = hexadecimalToBinary(text);
+                hexaField.value = text;
+                octaField.value = hexadecimalToOctal(text);
+                decimalField.value = decimal;
+            } else {
+                clearFields('Entrada no válida');
+            }
+        } else if (inputType === 'Octal') {
+            const decimal = octalToDecimal(text);
+
+            if (!isNaN(decimal)) {
+                binaryField.value = octalToBinary(text);
+                hexaField.value = octalToHexadecimal(text);
+                octaField.value = text;
+                decimalField.value = decimal;
+            } else {
+                clearFields('Entrada no válida');
+            }
         } else {
-            resultField.value = ''; 
+            clearFields();
         }
-    });
+    }
+
+    // Limpia los campos de salida
+    function clearFields(message = '') {
+        binaryField.value = message;
+        hexaField.value = message;
+        octaField.value = message;
+        decimalField.value = message;
+    }
+
+    // Evento principal
+    inputField.addEventListener('input', updateFields);
+    selectField.addEventListener('change', updateFields); // Permite cambiar entre tipos
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const inputField = document.querySelector('.input.is-link');
-    const resultField = document.querySelector('input[placeholder="Texto en Octagonal"]');
-    const selectField = document.querySelector('.select select');
+    const inputField = document.querySelector('#inputText');
+    const resultField = document.querySelector('#asciiResult');
 
-    
-    function binaryToOctal(binaryStr) {
-        if (!/^[01]+$/.test(binaryStr)) return 'Entrada no válida';
-
-        while (binaryStr.length % 3 !== 0) {
-            binaryStr = '0' + binaryStr;
-        }
-
-        let octal = '';
-        for (let i = 0; i < binaryStr.length; i += 3) {
-            const threeBits = binaryStr.slice(i, i + 3);
-            const decimalValue = parseInt(threeBits, 2);
-            octal += decimalValue.toString(8);
-        }
-        return octal;
+    function stringToAscii(str) {
+        return str.split('').map(char => char.charCodeAt(0)).join('-');
     }
 
     inputField.addEventListener('input', () => {
         const text = inputField.value.trim(); 
-        const inputType = selectField.value; 
-
-        if (inputType === "Binario") {
-            const octal = binaryToOctal(text); 
-            resultField.value = octal !== 'Entrada no válida' ? octal : 'Entrada no válida';
-        } else {
-            resultField.value = 'La entrada no tiene unos ni ceros'; 
-        }
+        const ascii = stringToAscii(text); // Convierte el texto a ASCII
+        resultField.value = ascii; // Muestra el resultado en el campo de salida
     });
 });
-
