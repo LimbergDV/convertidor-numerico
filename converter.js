@@ -64,4 +64,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const inputField = document.querySelector('.input.is-link');
+    const octaField = document.querySelector('input[placeholder="Texto en Octagonal"]');
+    const selectField = document.querySelector('.select select');
+
+    function decimalToOctadecimal(num){
+        let resultado = '';
+        while (num > 0){
+            const remainder = num % 8;
+            resultado = remainder.toString(8) + resultado;
+            num = Math.floor(num / 8);
+        }
+        return resultado || '0';
+    }
+
+    inputField.addEventListener('input', () => {
+        const text  = inputField.value.trim();
+        const inputType = selectField.value;
+
+        if (inputType === "Decimal"){
+            const decimal = parseInt(text, 10)
+            if(!isNaN(decimal)){
+                const binary = decimalToOctadecimal(decimal);
+                octaField.value = binary;
+            } else {
+                octaField.value = '';
+            }
+        } else {
+            octaField.value = '';
+        }
+    });
+});
+
 
